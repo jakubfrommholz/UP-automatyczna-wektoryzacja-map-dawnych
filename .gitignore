@@ -1,0 +1,5 @@
+qgis-plugin-deepness-devel/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
