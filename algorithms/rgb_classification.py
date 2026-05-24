@@ -8,7 +8,7 @@ koloru modelowego i przypisuje klasę o najmniejszej odległości.
 Dostępne metryki:
   • Euklidesowa (RGB)         — szybka, wprost na wartościach R, G, B.
   • CIEDE2000 (CIE Lab, D65)  — percepcyjna różnica barw; konwersja sRGB→Lab,
-    wzór CIE ΔE2000 (zwektoryzowane przeniesienie kodu z ciede-2000.py).
+    wzór CIE ΔE2000 (zwektoryzowane przeniesienie kodu z ciede2000.py).
 
 Integracja: brak zewnętrznych zależności poza numpy (wbudowane w QGIS).
 """
@@ -132,7 +132,7 @@ class RgbClassificationAlgorithm(QgsProcessingAlgorithm):
             '  • CIEDE2000 (CIE Lab, D65) — percepcyjnie poprawna różnica barw; '
             'sRGB jest najpierw konwertowane do Lab (D65), następnie liczona\n'
             '    jest odległość wg wzoru CIE ΔE2000 (zwektoryzowana wersja '
-            'implementacji z pliku ciede-2000.py).\n\n'
+            'implementacji z pliku ciede2000.py).\n\n'
             'Parametr "Kolory modelowe": tabela z kolumnami [Nazwa, R, G, B].\n'
             'Każdy wiersz = jedna klasa. Wartości R, G, B w zakresie 0–255.\n\n'
             'Wyjście: jednopasmowy GeoTIFF z indeksami klas (0, 1, 2, ...).\n\n'

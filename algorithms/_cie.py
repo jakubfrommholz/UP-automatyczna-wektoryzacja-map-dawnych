@@ -2,7 +2,7 @@
 Konwersja sRGB → CIE Lab (D65) oraz różnica barw CIEDE2000.
 
 Wersja zwektoryzowana dla numpy. Wzór CIEDE2000 jest wiernym przeniesieniem
-skalarnej implementacji z pliku ciede-2000.py w katalogu wtyczki (public domain),
+skalarnej implementacji z pliku ciede2000.py (public domain, w algorithms/),
 przepisanym na operacje numpy by działał na całych tablicach (H, W, 3).
 
 Funkcje:
@@ -64,7 +64,7 @@ def rgb_to_lab(rgb):
 
 
 # ---------------------------------------------------------------------------
-# CIEDE2000 — wzór zgodny z ciede-2000.py (public domain w katalogu wtyczki)
+# CIEDE2000 — wzór zgodny z ciede2000.py (public domain w algorithms/)
 # ---------------------------------------------------------------------------
 
 _PI = np.pi

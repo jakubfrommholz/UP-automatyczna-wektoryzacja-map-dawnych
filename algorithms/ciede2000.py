@@ -34,7 +34,7 @@ def ciede_2000(l_1, a_1, b_1, l_2, a_2, b_2) :
 	h_d = (h_2 - h_1) * 0.5
 	if pi < n :
 		h_d += pi
-		# 📜 Sharma’s formulation doesn’t use the next line, but the one after it,
+		# 📜 Sharma's formulation doesn't use the next line, but the one after it,
 		# and these two variants differ by ±0.0003 on the final color differences.
 		h_m += pi
 		# h_m += pi if h_m < pi else -pi
@@ -69,7 +69,7 @@ def ciede_2000(l_1, a_1, b_1, l_2, a_2, b_2) :
 
 # L1 = 56.7   a1 = 35.7   b1 = 1.8
 # L2 = 56.4   a2 = 30.4   b2 = -1.5
-# CIE ΔE00 = 2.9300617784 (Bruce Lindbloom, Netflix’s VMAF, ...)
+# CIE ΔE00 = 2.9300617784 (Bruce Lindbloom, Netflix's VMAF, ...)
 # CIE ΔE00 = 2.9300753540 (Gaurav Sharma, OpenJDK, ...)
 # Deviation between implementations ≈ 1.4e-5
 
