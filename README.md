@@ -1,6 +1,6 @@
 # Vector from Map — dokumentacja techniczna
 
-Wtyczka QGIS dodająca zestaw algorytmów do **automatycznej wektoryzacji map** (Processing Toolbox) oraz szybki dostęp z paska narzędzi. Projekt jest „mostem” pomiędzy natywnym Processing QGIS a opcjonalnymi komponentami: **SAGA Next Gen**, **Deepness**, **GeoAI**.
+Wtyczka QGIS dodająca zestaw algorytmów do **automatycznej wektoryzacji map** (Processing Toolbox) oraz szybki dostęp z paska narzędzi.
 
 - Minimalna wersja QGIS: **3.16** (`metadata.txt`)
 - Processing provider: `vector_from_map` (`hasProcessingProvider=yes`)
