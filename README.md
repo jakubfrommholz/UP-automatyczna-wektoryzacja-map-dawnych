@@ -335,12 +335,3 @@ Objawy:
 
 Rozwiązanie:
 - ustaw `INPUT_CHANNELS` zgodnie z tym, jak trenowano model (np. 1 dla grayscale, 3 dla RGB, 4 dla RGBA itd.).
-
----
-
-## Informacje projektowe
-
-- Nazwa: Vector from Map
-- Wersja: 1.0.0 (`metadata.txt`)
-- Autor: UczelniePrzyszlosci
-
