@@ -2,7 +2,7 @@
 Check Dependencies — diagnostyka zależności wtyczki.
 
 Raportuje dostępność wszystkich wtyczek i bibliotek wymaganych lub
-opcjonalnych dla algorytmów Vectorization Bridge:
+opcjonalnych dla algorytmów Vector from Map:
   • Deepness       — integracja cięcia rastra (opcjonalne)
   • GeoAI          — trenowanie modeli (opcjonalne, informacyjnie)
   • SAGA NG        — wykrywanie krawędzi (opcjonalne)
@@ -56,7 +56,7 @@ class CheckDependenciesAlgorithm(QgsProcessingAlgorithm):
     def shortHelpString(self):
         return (
             'Sprawdza dostępność wszystkich wtyczek i bibliotek Python '
-            'wymaganych lub opcjonalnych dla algorytmów Vectorization Bridge.\n\n'
+            'wymaganych lub opcjonalnych dla algorytmów Vector from Map.\n\n'
             'Raport pojawi się w panelu wyników Processing oraz w logu.'
         )
 
@@ -80,7 +80,7 @@ class CheckDependenciesAlgorithm(QgsProcessingAlgorithm):
             lines.append(msg)
 
         log('=' * 60)
-        log('  Vectorization Bridge — Raport zależności')
+        log('  Vector from Map — Raport zależności')
         log('=' * 60)
 
         # --- Wymagane biblioteki Python ---
@@ -152,7 +152,7 @@ class CheckDependenciesAlgorithm(QgsProcessingAlgorithm):
                     if not found:
                         log('       (brak)')
         else:
-            log('     → WYMAGANA dla pełnej funkcjonalności wtyczki Vectorization Bridge')
+            log('     → WYMAGANA dla pełnej funkcjonalności wtyczki Vector from Map')
             log('       (klasyfikacja pikseli, k-means, przetwarzanie obrazu — łącznie 9 algo).')
             log('     → Instalacja: Plugins > Manage and Install > "SAGA Next Gen".')
 

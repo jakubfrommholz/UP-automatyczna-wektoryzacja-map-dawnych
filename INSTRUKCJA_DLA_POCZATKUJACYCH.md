@@ -1,14 +1,14 @@
-# Vectorization Bridge — instrukcja dla początkującego
+# Vector from Map — instrukcja dla początkującego
 
-Ta instrukcja opisuje **co robi każda opcja** dostępna w menu/toolbarze wtyczki Vectorization Bridge oraz **co oznaczają parametry** w oknach algorytmów Processing.
+Ta instrukcja opisuje **co robi każda opcja** dostępna w menu/toolbarze wtyczki Vector from Map oraz **co oznaczają parametry** w oknach algorytmów Processing.
 
 ## Gdzie znaleźć opcje wtyczki
 
 Po instalacji i włączeniu wtyczki zobaczysz:
 
 1. **Ikonę na pasku narzędzi** (toolbar) — kliknięcie od razu rozwija menu (bez dodatkowego okna).
-2. **Menu `Wtyczki → Vectorization Bridge`** — to samo menu.
-3. **Processing Toolbox** — dostawca (provider) `Vectorization Bridge` z pogrupowanymi algorytmami.
+2. **Menu `Wtyczki → Vector from Map`** — to samo menu.
+3. **Processing Toolbox** — dostawca (provider) `Vector from Map` z pogrupowanymi algorytmami.
 
 Każda pozycja z menu otwiera standardowe okno **Processing → parametry algorytmu**.
 
@@ -29,7 +29,7 @@ Każda pozycja z menu otwiera standardowe okno **Processing → parametry algory
 
 ## Sprawdź zależności
 
-**Do czego służy:** generuje raport (w oknie wyników Processing), czy środowisko QGIS ma biblioteki i wtyczki wymagane/zalecane przez Vectorization Bridge.
+**Do czego służy:** generuje raport (w oknie wyników Processing), czy środowisko QGIS ma biblioteki i wtyczki wymagane/zalecane przez Vector from Map.
 
 **Parametry (opcje):**
 - **Szczegółowy raport (lista algorytmów SAGA)** (`VERBOSE`)
@@ -213,7 +213,7 @@ To są pozycje:
 - **SAGA: SVM**
 - **SAGA: K-Means dla rastrów**
 
-**Do czego służą:** są to „cienkie” mostki do algorytmów z providera **SAGA Next Gen** (`sagang:*`). Wtyczka Vectorization Bridge:
+**Do czego służą:** są to „cienkie” mostki do algorytmów z providera **SAGA Next Gen** (`sagang:*`). Wtyczka Vector from Map:
 - pokazuje te algorytmy w swoim menu,
 - a po uruchomieniu przekazuje parametry 1:1 do SAGA.
 

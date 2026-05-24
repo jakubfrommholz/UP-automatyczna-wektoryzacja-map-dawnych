@@ -13,7 +13,7 @@ Integracja z Deepness:
     implementacja działająca niezależnie od Deepness.
   • Gdy Deepness jest niedostępny, stosowane jest własne zaokrąglenie do siatki.
 
-Notatka o pełnej funkcjonalności wtyczki Vectorization Bridge:
+Notatka o pełnej funkcjonalności wtyczki Vector from Map:
   • SAGA Next Gen — WYMAGANA dla algorytmów klasyfikacji, k-means, edge detection.
   • GeoAI       — ZALECANA (opcjonalna) do trenowania modeli przed inferencją.
 """
@@ -142,7 +142,7 @@ class TileExportAlgorithm(QgsProcessingAlgorithm):
             'uruchomienie miało własny folder.\n\n'
             f'Status integracji: {d_status}\n\n'
             'Wymagane: numpy (wbudowane), opencv-python (cv2).\n\n'
-            'Notatka — pełna funkcjonalność wtyczki Vectorization Bridge:\n'
+            'Notatka — pełna funkcjonalność wtyczki Vector from Map:\n'
             '  • Wytrenowany model (PyTorch .pth lub ONNX .onnx) uruchomisz w\n'
             '    "Inferencja modelu" w tej samej wtyczce.\n'
             '  • SAGA Next Gen — WYMAGANA dla pełnej funkcjonalności wtyczki\n'

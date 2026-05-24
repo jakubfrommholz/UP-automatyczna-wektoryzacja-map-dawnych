@@ -10,13 +10,13 @@ ICON_PATH = os.path.join(os.path.dirname(__file__), 'icon.svg')
 class VectorizationBridgeProvider(QgsProcessingProvider):
 
     def id(self):
-        return 'vectorization_bridge'
+        return 'vector_from_map'
 
     def name(self):
-        return 'Vectorization Bridge'
+        return 'Vector from Map'
 
     def longName(self):
-        return 'Vectorization Bridge — wektoryzacja z integracją Deepness i SAGA'
+        return 'Vector from Map — wektoryzacja z integracją Deepness i SAGA'
 
     def icon(self):
         return QIcon(ICON_PATH)

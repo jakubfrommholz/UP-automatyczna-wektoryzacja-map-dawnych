@@ -12,28 +12,28 @@ ICON_PATH = os.path.join(os.path.dirname(__file__), 'icon.svg')
 # (etykieta podgrupy, [(algo_id, etykieta), ...])
 _MENU_GROUPS = [
     ('Diagnostyka', [
-        ('vectorization_bridge:check_dependencies', 'Sprawdź zależności'),
+        ('vector_from_map:check_dependencies', 'Sprawdź zależności'),
     ]),
     ('Deep learning', [
-        ('vectorization_bridge:tile_export',  'Cięcie rastra na kafle (ML)'),
-        ('vectorization_bridge:pytorch_training', 'Trenowanie modelu (PyTorch, U-Net)'),
-        ('vectorization_bridge:pth_inference', 'Inferencja modelu (PyTorch / ONNX)'),
+        ('vector_from_map:tile_export',  'Cięcie rastra na kafle (ML)'),
+        ('vector_from_map:pytorch_training', 'Trenowanie modelu (PyTorch, U-Net)'),
+        ('vector_from_map:pth_inference', 'Inferencja modelu (PyTorch / ONNX)'),
     ]),
     ('Klasyfikacja', [
-        ('vectorization_bridge:rgb_classification',  'Klasyfikacja pikseli RGB (Euklidesowa / CIEDE2000)'),
-        ('vectorization_bridge:artificialneuralnetworkclassification', 'SAGA: Sieć neuronowa'),
-        ('vectorization_bridge:decisiontreeclassification',            'SAGA: Drzewo decyzyjne'),
-        ('vectorization_bridge:logisticregressionclassification',      'SAGA: Regresja logistyczna'),
-        ('vectorization_bridge:normalbayesclassification',             'SAGA: Normal Bayes'),
-        ('vectorization_bridge:randomforestclassification',            'SAGA: Random Forest'),
-        ('vectorization_bridge:supportvectormachineclassification',    'SAGA: SVM'),
-        ('vectorization_bridge:kmeansclusteringforrasters',            'SAGA: K-Means dla rastrów'),
+        ('vector_from_map:rgb_classification',  'Klasyfikacja pikseli RGB (Euklidesowa / CIEDE2000)'),
+        ('vector_from_map:artificialneuralnetworkclassification', 'SAGA: Sieć neuronowa'),
+        ('vector_from_map:decisiontreeclassification',            'SAGA: Drzewo decyzyjne'),
+        ('vector_from_map:logisticregressionclassification',      'SAGA: Regresja logistyczna'),
+        ('vector_from_map:normalbayesclassification',             'SAGA: Normal Bayes'),
+        ('vector_from_map:randomforestclassification',            'SAGA: Random Forest'),
+        ('vector_from_map:supportvectormachineclassification',    'SAGA: SVM'),
+        ('vector_from_map:kmeansclusteringforrasters',            'SAGA: K-Means dla rastrów'),
     ]),
     ('Przetwarzanie obrazu', [
-        ('vectorization_bridge:edge_detection',          'Wykrywanie krawędzi (Canny/Sobel/SAGA)'),
-        ('vectorization_bridge:rasterskeletonization',   'Szkieletyzacja rastra (SAGA)'),
-        ('vectorization_bridge:region_growing',          'Seeded Region Growing'),
-        ('vectorization_bridge:split_rgb_bands',         'Rozdziel raster RGB na pasma'),
+        ('vector_from_map:edge_detection',          'Wykrywanie krawędzi (Canny/Sobel/SAGA)'),
+        ('vector_from_map:rasterskeletonization',   'Szkieletyzacja rastra (SAGA)'),
+        ('vector_from_map:region_growing',          'Seeded Region Growing'),
+        ('vector_from_map:split_rgb_bands',         'Rozdziel raster RGB na pasma'),
     ]),
 ]
 
@@ -71,7 +71,7 @@ class VectorizationBridgePlugin:
         icon = QIcon(ICON_PATH)
 
         # Zbuduj menu z pogrupowanymi akcjami
-        self.menu = QMenu('Vectorization Bridge', self.iface.mainWindow())
+        self.menu = QMenu('Vector from Map', self.iface.mainWindow())
         for group_label, items in _MENU_GROUPS:
             sub = self.menu.addMenu(group_label)
             for algo_id, label in items:
@@ -83,30 +83,30 @@ class VectorizationBridgePlugin:
         # Toolbar: QToolButton z trybem InstantPopup, by klik rozwijał menu
         self.tool_button = QToolButton(self.iface.mainWindow())
         self.tool_button.setIcon(icon)
-        self.tool_button.setText('Vectorization Bridge')
+        self.tool_button.setText('Vector from Map')
         self.tool_button.setToolTip(
-            'Vectorization Bridge — kliknij, aby wybrać algorytm'
+            'Vector from Map — kliknij, aby wybrać algorytm'
         )
         self.tool_button.setPopupMode(QToolButton.InstantPopup)
         self.tool_button.setMenu(self.menu)
 
         # Dedykowany QToolBar wtyczki (osobna grupa w pasku narzędzi, nie "Wtyczki")
-        self.toolbar = self.iface.addToolBar('Vectorization Bridge')
+        self.toolbar = self.iface.addToolBar('Vector from Map')
         self.toolbar.setObjectName('VectorizationBridgeToolbar')
         self.toolbar_action = self.toolbar.addWidget(self.tool_button)
 
         # Akcja w menu Wtyczki — pokazuje to samo menu
         self.plugin_menu_action = QAction(
-            icon, 'Vectorization Bridge', self.iface.mainWindow()
+            icon, 'Vector from Map', self.iface.mainWindow()
         )
         self.plugin_menu_action.setMenu(self.menu)
-        self.iface.addPluginToMenu('&Vectorization Bridge', self.plugin_menu_action)
+        self.iface.addPluginToMenu('&Vector from Map', self.plugin_menu_action)
 
     def unload(self):
         if self.plugin_menu_action is not None:
             try:
                 self.iface.removePluginMenu(
-                    '&Vectorization Bridge', self.plugin_menu_action
+                    '&Vector from Map', self.plugin_menu_action
                 )
             except Exception:
                 pass

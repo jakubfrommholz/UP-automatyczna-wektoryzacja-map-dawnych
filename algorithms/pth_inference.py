@@ -13,7 +13,7 @@ Wzorzec gałęzi ONNX inspirowany Deepness'owym map_processor / model_base.py
 nie wymagamy zainstalowanej wtyczki Deepness — implementacja jest własna,
 minimalna i niezależna.
 
-Notatka o pełnej funkcjonalności wtyczki Vectorization Bridge:
+Notatka o pełnej funkcjonalności wtyczki Vector from Map:
   • SAGA Next Gen — WYMAGANA dla algorytmów klasyfikacji, k-means, edge detection.
   • GeoAI       — ZALECANA (opcjonalna) do trenowania modeli przed inferencją.
 """
@@ -176,7 +176,7 @@ class PthInferenceAlgorithm(QgsProcessingAlgorithm):
             'argmax/threshold (lepsze wyniki na granicach kafli).\n\n'
             f'Status: {t_status}; {o_status}\n'
             f'{d_note}\n\n'
-            'Notatka — pełna funkcjonalność wtyczki Vectorization Bridge:\n'
+            'Notatka — pełna funkcjonalność wtyczki Vector from Map:\n'
             '  • Dane treningowe (kafle + maski) przygotujesz w "Cięcie rastra na kafle".\n'
             '  • SAGA Next Gen — WYMAGANA dla pełnej funkcjonalności wtyczki.\n'
             '  • GeoAI — ZALECANA (opcjonalna) do trenowania modeli.'

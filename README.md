@@ -1,9 +1,9 @@
-# Vectorization Bridge — dokumentacja techniczna
+# Vector from Map — dokumentacja techniczna
 
 Wtyczka QGIS dodająca zestaw algorytmów do **automatycznej wektoryzacji map** (Processing Toolbox) oraz szybki dostęp z paska narzędzi. Projekt jest „mostem” pomiędzy natywnym Processing QGIS a opcjonalnymi komponentami: **SAGA Next Gen**, **Deepness**, **GeoAI**.
 
 - Minimalna wersja QGIS: **3.16** (`metadata.txt`)
-- Processing provider: `vectorization_bridge` (`hasProcessingProvider=yes`)
+- Processing provider: `vector_from_map` (`hasProcessingProvider=yes`)
 - Ikona: `icon.svg`
 - Liczba algorytmów rejestrowanych w providerze: **16**
 
@@ -35,7 +35,7 @@ Wtyczka QGIS dodająca zestaw algorytmów do **automatycznej wektoryzacji map** 
 
 ### GUI (toolbar + menu)
 
-W `plugin.py` tworzony jest dedykowany toolbar **„Vectorization Bridge”** z `QToolButton` w trybie `InstantPopup`. Kliknięcie rozwija menu z grupami tematycznymi, a każda akcja otwiera natywny dialog Processing:
+W `plugin.py` tworzony jest dedykowany toolbar **„Vector from Map”** z `QToolButton` w trybie `InstantPopup`. Kliknięcie rozwija menu z grupami tematycznymi, a każda akcja otwiera natywny dialog Processing:
 
 ```python
 from processing import execAlgorithmDialog
@@ -44,15 +44,15 @@ execAlgorithmDialog(algo_id, {})
 
 Menu jest zbudowane ze stałej `_MENU_GROUPS`. Id algorytmu w menu ma postać:
 
-- `vectorization_bridge:<algorithm_name>`
+- `vector_from_map:<algorithm_name>`
 
 ### Provider Processing
 
 `provider.py` dodaje klasy algorytmów w `loadAlgorithms()`.
 
 Ważne:
-- identyfikator providera (`id()`): `vectorization_bridge`
-- wszystkie algorytmy mają prefix `vectorization_bridge:` w Processing Registry.
+- identyfikator providera (`id()`): `vector_from_map`
+- wszystkie algorytmy mają prefix `vector_from_map:` w Processing Registry.
 
 ### Warstwa kompatybilności
 
@@ -75,37 +75,37 @@ Poniżej lista algorytmów rejestrowanych przez provider (`provider.py`) oraz ic
 
 | ID (Processing) | Plik | Opis | Wymagania |
 |---|---|---|---|
-| `vectorization_bridge:check_dependencies` | `algorithms/check_dependencies.py` | Raport dostępności bibliotek i wtyczek oraz status kluczowych algorytmów | brak (działa zawsze) |
+| `vector_from_map:check_dependencies` | `algorithms/check_dependencies.py` | Raport dostępności bibliotek i wtyczek oraz status kluczowych algorytmów | brak (działa zawsze) |
 
 ### Deep learning
 
 | ID (Processing) | Plik | Opis | Wymagania |
 |---|---|---|---|
-| `vectorization_bridge:tile_export` | `algorithms/tile_export.py` | Cięcie rastra na kafle + opcjonalna rasteryzacja maski i zapis PNG/GeoTIFF | `cv2` (PNG), GDAL (QGIS), numpy |
-| `vectorization_bridge:pytorch_training` | `algorithms/pytorch_training.py` | Trening segmentacji w QGIS (U-Net lub SMP) | `torch`; dla SMP: `segmentation-models-pytorch` (+ czasem `timm`) |
-| `vectorization_bridge:pth_inference` | `algorithms/pth_inference.py` | Inferencja modelu PyTorch (.pth/.pt) lub ONNX (.onnx) | `torch` lub `onnxruntime` |
+| `vector_from_map:tile_export` | `algorithms/tile_export.py` | Cięcie rastra na kafle + opcjonalna rasteryzacja maski i zapis PNG/GeoTIFF | `cv2` (PNG), GDAL (QGIS), numpy |
+| `vector_from_map:pytorch_training` | `algorithms/pytorch_training.py` | Trening segmentacji w QGIS (U-Net lub SMP) | `torch`; dla SMP: `segmentation-models-pytorch` (+ czasem `timm`) |
+| `vector_from_map:pth_inference` | `algorithms/pth_inference.py` | Inferencja modelu PyTorch (.pth/.pt) lub ONNX (.onnx) | `torch` lub `onnxruntime` |
 
 ### Klasyfikacja
 
 | ID (Processing) | Plik | Opis | Wymagania |
 |---|---|---|---|
-| `vectorization_bridge:rgb_classification` | `algorithms/rgb_classification.py` | Klasyfikacja pikseli „najbliższym kolorem” (RGB / CIEDE2000) | numpy |
-| `vectorization_bridge:artificialneuralnetworkclassification` | `algorithms/saga_classification.py` | Proxy do SAGA (ANN) | SAGA Next Gen (`sagang`) |
-| `vectorization_bridge:decisiontreeclassification` | `algorithms/saga_classification.py` | Proxy do SAGA (Decision Tree) | SAGA Next Gen |
-| `vectorization_bridge:logisticregressionclassification` | `algorithms/saga_classification.py` | Proxy do SAGA (Logistic Regression) | SAGA Next Gen |
-| `vectorization_bridge:normalbayesclassification` | `algorithms/saga_classification.py` | Proxy do SAGA (Normal Bayes) | SAGA Next Gen |
-| `vectorization_bridge:randomforestclassification` | `algorithms/saga_classification.py` | Proxy do SAGA (Random Forest) | SAGA Next Gen |
-| `vectorization_bridge:supportvectormachineclassification` | `algorithms/saga_classification.py` | Proxy do SAGA (SVM) | SAGA Next Gen |
-| `vectorization_bridge:kmeansclusteringforrasters` | `algorithms/saga_clustering.py` | Proxy do SAGA (K-Means dla rastrów) | SAGA Next Gen |
+| `vector_from_map:rgb_classification` | `algorithms/rgb_classification.py` | Klasyfikacja pikseli „najbliższym kolorem” (RGB / CIEDE2000) | numpy |
+| `vector_from_map:artificialneuralnetworkclassification` | `algorithms/saga_classification.py` | Proxy do SAGA (ANN) | SAGA Next Gen (`sagang`) |
+| `vector_from_map:decisiontreeclassification` | `algorithms/saga_classification.py` | Proxy do SAGA (Decision Tree) | SAGA Next Gen |
+| `vector_from_map:logisticregressionclassification` | `algorithms/saga_classification.py` | Proxy do SAGA (Logistic Regression) | SAGA Next Gen |
+| `vector_from_map:normalbayesclassification` | `algorithms/saga_classification.py` | Proxy do SAGA (Normal Bayes) | SAGA Next Gen |
+| `vector_from_map:randomforestclassification` | `algorithms/saga_classification.py` | Proxy do SAGA (Random Forest) | SAGA Next Gen |
+| `vector_from_map:supportvectormachineclassification` | `algorithms/saga_classification.py` | Proxy do SAGA (SVM) | SAGA Next Gen |
+| `vector_from_map:kmeansclusteringforrasters` | `algorithms/saga_clustering.py` | Proxy do SAGA (K-Means dla rastrów) | SAGA Next Gen |
 
 ### Przetwarzanie obrazu
 
 | ID (Processing) | Plik | Opis | Wymagania |
 |---|---|---|---|
-| `vectorization_bridge:edge_detection` | `algorithms/edge_detection.py` | Canny/Sobel (cv2) + opcjonalnie delegacja do algorytmu SAGA „edge/gradient” | `cv2` dla Canny/Sobel; SAGA NG dla metody SAGA |
-| `vectorization_bridge:rasterskeletonization` | `algorithms/saga_image_processing.py` | Proxy do SAGA (skeletonization) | SAGA Next Gen |
-| `vectorization_bridge:region_growing` | `algorithms/region_growing.py` | Seeded Region Growing (BFS od seedów punktowych) | numpy |
-| `vectorization_bridge:split_rgb_bands` | `algorithms/split_rgb_bands.py` | Rozdzielenie rastra RGB (wielopasmowego) na 3 rastry jednopasmowe (R/G/B) | numpy + GDAL (QGIS) |
+| `vector_from_map:edge_detection` | `algorithms/edge_detection.py` | Canny/Sobel (cv2) + opcjonalnie delegacja do algorytmu SAGA „edge/gradient” | `cv2` dla Canny/Sobel; SAGA NG dla metody SAGA |
+| `vector_from_map:rasterskeletonization` | `algorithms/saga_image_processing.py` | Proxy do SAGA (skeletonization) | SAGA Next Gen |
+| `vector_from_map:region_growing` | `algorithms/region_growing.py` | Seeded Region Growing (BFS od seedów punktowych) | numpy |
+| `vector_from_map:split_rgb_bands` | `algorithms/split_rgb_bands.py` | Rozdzielenie rastra RGB (wielopasmowego) na 3 rastry jednopasmowe (R/G/B) | numpy + GDAL (QGIS) |
 
 ---
 
@@ -138,7 +138,7 @@ Poniżej lista algorytmów rejestrowanych przez provider (`provider.py`) oraz ic
 
 ### Instalacja ręczna (developerska)
 
-Skopiuj folder `vectorization_bridge/` do katalogu pluginów profilu QGIS.
+Skopiuj folder `vector_from_map/` do katalogu pluginów profilu QGIS.
 
 - Windows:
   - `%APPDATA%\QGIS\QGIS3\profiles\default\python\plugins\`
@@ -146,7 +146,7 @@ Skopiuj folder `vectorization_bridge/` do katalogu pluginów profilu QGIS.
   - `~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/`
 
 Następnie uruchom QGIS i włącz plugin:
-- `Plugins > Manage and Install Plugins...` → **Vectorization Bridge**
+- `Plugins > Manage and Install Plugins...` → **Vector from Map**
 
 ### Instalacja zależności Python (jeżeli potrzebne)
 
@@ -221,7 +221,7 @@ Wyjście: plik `.pth` jako checkpoint:
 
 ```python
 {
-  'format': 'vectorization_bridge_torch_checkpoint_v1',
+  'format': 'vector_from_map_torch_checkpoint_v1',
   'model_type': 'unet' | 'deeplabv3plus' | 'linknet' | 'fpn' | 'pspnet' | 'manet',
   'encoder_name': 'resnet34' | ... (dla SMP),
   'in_channels': int,
@@ -272,7 +272,7 @@ Wyjście: GeoTIFF z indeksami klas (Byte gdy ≤255 klas, inaczej Int16).
 
 1. Utwórz klasę dziedziczącą po `SagaProxyAlgorithm` i ustaw `SAGA_ALGO_ID`, `DISPLAY_NAME`, `GROUP_NAME`, `GROUP_ID`.
 2. Dodaj import i `self.addAlgorithm(cls())` w `provider.py`.
-3. Dodaj wpis w `_MENU_GROUPS` w `plugin.py` (ID: `vectorization_bridge:<short_name>`).
+3. Dodaj wpis w `_MENU_GROUPS` w `plugin.py` (ID: `vector_from_map:<short_name>`).
 
 Przykład:
 
@@ -340,7 +340,7 @@ Rozwiązanie:
 
 ## Informacje projektowe
 
-- Nazwa: Vectorization Bridge
+- Nazwa: Vector from Map
 - Wersja: 1.0.0 (`metadata.txt`)
 - Autor: UczelniePrzyszlosci
 

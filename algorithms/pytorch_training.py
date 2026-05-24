@@ -417,7 +417,7 @@ class PytorchTrainingAlgorithm(QgsProcessingAlgorithm):
         optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
         report_lines = [
-            'Vectorization Bridge — raport treningu PyTorch',
+            'Vector from Map — raport treningu PyTorch',
             f'Model: {self.MODEL_OPTIONS[model_arch]}',
             f'Model key: {model_key}',
             f'Encoder: {encoder_name}' if model_key != 'unet' else 'Encoder: n/a (U-Net)',
@@ -477,7 +477,7 @@ class PytorchTrainingAlgorithm(QgsProcessingAlgorithm):
         model = model.to('cpu')
         model.eval()
         checkpoint = {
-            'format': 'vectorization_bridge_torch_checkpoint_v1',
+            'format': 'vector_from_map_torch_checkpoint_v1',
             'model_type': model_key,
             'encoder_name': encoder_name if model_key != 'unet' else None,
             'in_channels': in_channels,

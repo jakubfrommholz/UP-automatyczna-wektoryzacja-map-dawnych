@@ -100,7 +100,7 @@ class SagaProxyAlgorithm(QgsProcessingAlgorithm):
         import processing  # QGIS processing module
 
         feedback.pushInfo(
-            f'[Vectorization Bridge → SAGA] Deleguję do: {self.SAGA_ALGO_ID}'
+            f'[Vector from Map → SAGA] Deleguję do: {self.SAGA_ALGO_ID}'
         )
         forward = {k: v for k, v in parameters.items() if v is not None}
         result = processing.run(
