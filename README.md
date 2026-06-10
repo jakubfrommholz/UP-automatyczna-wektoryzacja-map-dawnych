@@ -335,3 +335,7 @@ Objawy:
 
 Rozwiązanie:
 - ustaw `INPUT_CHANNELS` zgodnie z tym, jak trenowano model (np. 1 dla grayscale, 3 dla RGB, 4 dla RGBA itd.).
+
+## Acknowledgements
+GeoSegStudio (https://github.com/dronnix-io/GeoSegStudio)
+GeoAI: Artificial Intelligence for Geospatial Data (https://github.com/opengeos/geoai)
