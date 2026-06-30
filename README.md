@@ -2,74 +2,22 @@
 
 Wtyczka QGIS dodająca zestaw algorytmów do **automatycznej wektoryzacji map** (Processing Toolbox) oraz szybki dostęp z paska narzędzi.
 
-- Minimalna wersja QGIS: **3.16** (`metadata.txt`)
-- Processing provider: `vector_from_map` (`hasProcessingProvider=yes`)
-- Ikona: `icon.svg`
-- Liczba algorytmów rejestrowanych w providerze: **16**
-
-> Założenie integracji: wszystkie integracje są **opcjonalne**. Algorytmy proxy do SAGA są widoczne zawsze, ale zwracają czytelny błąd uruchomienia, jeżeli provider `sagang` nie jest dostępny.
-
 ---
 
 ## Spis treści
 
-- [Architektura](#architektura)
-- [Algorytmy w Processing Toolbox](#algorytmy-w-processing-toolbox)
-- [Zależności (Python i wtyczki QGIS)](#zależności-python-i-wtyczki-qgis)
+- [Algorytmy w Processing Toolbox](#algorytmy-w-processing-toolbox) 
+- [Biblioteki Python](#biblioteki-python)
 - [Instalacja](#instalacja)
-- [Integracje](#integracje)
-- [Formaty danych i kontrakty](#formaty-danych-i-kontrakty)
-- [Rozszerzanie i rozwój](#rozszerzanie-i-rozwój)
-- [Diagnostyka](#diagnostyka)
-- [Troubleshooting](#troubleshooting)
-
----
-
-## Architektura
-
-### Entry-point wtyczki
-
-- `__init__.py` — `classFactory(iface)` zwraca `VectorizationBridgePlugin`.
-- `plugin.py` — GUI wtyczki (toolbar + menu) i rejestracja provider-a Processing.
-- `provider.py` — `VectorizationBridgeProvider` (QgsProcessingProvider) rejestrujący algorytmy.
-
-### GUI (toolbar + menu)
-
-W `plugin.py` tworzony jest dedykowany toolbar **„Vector from Map”** z `QToolButton` w trybie `InstantPopup`. Kliknięcie rozwija menu z grupami tematycznymi, a każda akcja otwiera natywny dialog Processing:
-
-```python
-from processing import execAlgorithmDialog
-execAlgorithmDialog(algo_id, {})
-```
-
-Menu jest zbudowane ze stałej `_MENU_GROUPS`. Id algorytmu w menu ma postać:
-
-- `vector_from_map:<algorithm_name>`
-
-### Provider Processing
-
-`provider.py` dodaje klasy algorytmów w `loadAlgorithms()`.
-
-Ważne:
-- identyfikator providera (`id()`): `vector_from_map`
-- wszystkie algorytmy mają prefix `vector_from_map:` w Processing Registry.
-
-### Warstwa kompatybilności
-
-`algorithms/_compat.py` to centralny moduł detekcji zależności:
-- sprawdza dostępność wtyczek (Deepness, GeoAI, SAGA Next Gen)
-- sprawdza dostępność bibliotek Python (`cv2`, `torch`, `onnxruntime`, `segmentation_models_pytorch`, `timm`)
-- dostarcza helpery integracyjne, np. `deepness_round_extent(...)`.
-
-**Wszystkie algorytmy powinny używać `_compat.py` zamiast bezpośrednich importów integracji.**
+- [Integracja](#integracja)
+- [Formaty danych](#formaty-danych)
+- [Podziękowania](#podziekowania)
 
 ---
 
 ## Algorytmy w Processing Toolbox
 
 Poniżej lista algorytmów rejestrowanych przez provider (`provider.py`) oraz ich role.
-
-> Nazwy grup w toolboxie pochodzą z metod `group()`/`groupId()` w klasach algorytmów.
 
 ### Diagnostyka
 
@@ -109,9 +57,7 @@ Poniżej lista algorytmów rejestrowanych przez provider (`provider.py`) oraz ic
 
 ---
 
-## Zależności (Python i wtyczki QGIS)
-
-### Biblioteki Python
+## Biblioteki Python
 
 > QGIS ma własne środowisko Pythona. Instalacja `pip` zależy od dystrybucji QGIS (np. OSGeo4W). Algorytm „Sprawdź zależności” podpowiada brakujące pakiety.
 
@@ -124,19 +70,9 @@ Poniżej lista algorytmów rejestrowanych przez provider (`provider.py`) oraz ic
 | `timm` | `pytorch_training` (encodery `timm-*`) | opcjonalny zależnie od encoderów |
 | `onnxruntime` | `pth_inference` (ONNX) | wymagany dla ścieżki .onnx |
 
-### Wtyczki QGIS
-
-| Wtyczka | Rola | Wymagalność |
-|---|---|---|
-| **SAGA Next Gen** (provider `sagang`) | proxy algorytmów SAGA + metoda SAGA w `edge_detection` | **wymagana dla pełnej funkcjonalności** |
-| Deepness | integracja: zaokrąglanie extent do siatki pikseli w `tile_export` | opcjonalna |
-| GeoAI | tylko informacyjnie w diagnostyce (workflow trenowania) | opcjonalna / zalecana |
-
 ---
 
 ## Instalacja
-
-### Instalacja ręczna (developerska)
 
 Skopiuj folder `vector_from_map/` do katalogu pluginów profilu QGIS.
 
@@ -155,15 +91,6 @@ Najprostsza ścieżka weryfikacji:
 
 1. Uruchom algorytm: **Diagnostyka → Sprawdź zależności** (`check_dependencies`).
 2. Doinstaluj wskazane pakiety.
-
-Przykładowe komendy (orientacyjnie):
-
-```bash
-pip install opencv-python
-pip install onnxruntime
-pip install segmentation-models-pytorch timm
-```
-
 ---
 
 ## Integracje
@@ -177,19 +104,6 @@ W `tile_export.py` wtyczka korzysta z Deepness, jeśli jest zainstalowany:
 Fallback:
 - gdy Deepness nie jest dostępny, algorytm działa w pełni samodzielnie.
 
-### SAGA Next Gen (opcjonalnie, ale „pełna funkcjonalność”)
-
-Są dwa wzorce integracji:
-
-1) **Dynamiczna metoda SAGA w `edge_detection.py`**
-- algorytm w runtime wyszukuje „najlepszy” dostępny algorytm SAGA dot. edge/gradient
-  (`_compat.saga_find_edge_algorithm()`)
-- dodaje go jako dodatkową pozycję w enum „Metoda”
-
-2) **Proxy 1:1 w `saga_proxy.py`**
-- `SagaProxyAlgorithm.initAlgorithm()` klonuje definicje parametrów algorytmu SAGA
-- `processAlgorithm()` forwarduje parametry 1:1 do `processing.run(self.SAGA_ALGO_ID, ...)`
-
 #### Krytyczne (stabilność QGIS)
 
 W `SagaProxyAlgorithm.initAlgorithm()` **nie wolno** iterować po `algo.outputDefinitions()` i robić `self.addOutput(o)`. Outputy typu *destination* są rejestrowane automatycznie przez `addParameter(p.clone())`.
@@ -198,7 +112,7 @@ Dodanie obcych obiektów C++ jako outputów może prowadzić do **use-after-free
 
 ---
 
-## Formaty danych i kontrakty
+## Formaty danych
 
 ### Tile Export (`tile_export`)
 
@@ -266,14 +180,6 @@ Wyjście: GeoTIFF z indeksami klas (Byte gdy ≤255 klas, inaczej Int16).
 
 ---
 
-## Rozszerzanie i rozwój
-
-### Dodanie nowego proxy do SAGA
-
-1. Utwórz klasę dziedziczącą po `SagaProxyAlgorithm` i ustaw `SAGA_ALGO_ID`, `DISPLAY_NAME`, `GROUP_NAME`, `GROUP_ID`.
-2. Dodaj import i `self.addAlgorithm(cls())` w `provider.py`.
-3. Dodaj wpis w `_MENU_GROUPS` w `plugin.py` (ID: `vector_from_map:<short_name>`).
-
 Przykład:
 
 ```python
@@ -284,58 +190,10 @@ class MyNewSagaAlgorithm(SagaProxyAlgorithm):
     GROUP_ID = 'saga_...'
 ```
 
-### Zasady dot. kompatybilności
-
-- wszelkie detekcje dostępności zależności wykonuj w `algorithms/_compat.py`
-- algorytmy powinny soft-failować (czytelny komunikat) zamiast rzucać ImportError
-
 ---
 
-## Diagnostyka
-
-Uruchom: **Diagnostyka → Sprawdź zależności**.
-
-Algorytm:
-- wypisuje wersje bibliotek (numpy/cv2/torch/smp/timm/onnxruntime)
-- sprawdza dostępność providera `sagang`
-- raportuje, które funkcje są możliwe do uruchomienia w aktualnym środowisku
-
----
-
-## Troubleshooting
-
-### Brak `cv2` / `torch` / `onnxruntime`
-
-Objawy:
-- algorytmy odmawiają uruchomienia w `checkParameterValues()`
-
-Rozwiązanie:
-- uruchom `check_dependencies` i doinstaluj pakiety w środowisku Pythona QGIS.
-
-### Brak SAGA Next Gen / `sagang`
-
-Objawy:
-- algorytmy proxy SAGA są widoczne, ale zwracają błąd „Wymagana wtyczka SAGA Next Gen”
-
-Rozwiązanie:
-- `Plugins > Manage and Install Plugins...` → zainstaluj **SAGA Next Gen**
-
-### Crash QGIS przy algorytmach proxy SAGA
-
-Najczęstsza przyczyna: nieprawidłowe obchodzenie się z outputDefinitions w proxy.
-
-Reguła:
-- w `SagaProxyAlgorithm.initAlgorithm()` dodawaj wyłącznie `self.addParameter(p.clone())`
-- nie dodawaj outputów pochodzących z instancji algorytmu SAGA
-
-### Inferencja: niedopasowanie liczby kanałów
-
-Objawy:
-- błąd podczas `_read_tile(...)` / `runner(tile)`
-
-Rozwiązanie:
-- ustaw `INPUT_CHANNELS` zgodnie z tym, jak trenowano model (np. 1 dla grayscale, 3 dla RGB, 4 dla RGBA itd.).
-
-## Acknowledgements
+## Podziękowania
 GeoSegStudio (https://github.com/dronnix-io/GeoSegStudio)
 GeoAI: Artificial Intelligence for Geospatial Data (https://github.com/opengeos/geoai)
+
+Projekt wykonany w ramach "Uczelnie Przyszłości".
