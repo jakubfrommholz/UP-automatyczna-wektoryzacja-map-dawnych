@@ -1,5 +1,10 @@
 # Vector from Map — dokumentacja techniczna
 
+<p align="center">
+  <a href="README.md">English</a> ·
+  <a href="README.pl.md">Polski</a> ·
+</p>
+
 Wtyczka QGIS dodająca zestaw algorytmów do **automatycznej wektoryzacji map** (Processing Toolbox) oraz szybki dostęp z paska narzędzi.
 
 ---
@@ -196,4 +201,4 @@ class MyNewSagaAlgorithm(SagaProxyAlgorithm):
 GeoSegStudio (https://github.com/dronnix-io/GeoSegStudio)
 GeoAI: Artificial Intelligence for Geospatial Data (https://github.com/opengeos/geoai)
 
-Projekt wykonany w ramach "Uczelnie Przyszłości".
+Projekt wykonany w ramach projektu ["Uczelnie Przyszłości"](https://www.gov.pl/web/ncbr/projekt-uczelnie-przyszlosci).
