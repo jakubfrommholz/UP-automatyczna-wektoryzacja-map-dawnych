@@ -11,7 +11,7 @@ Wtyczka QGIS dodająca zestaw algorytmów do **automatycznej wektoryzacji map** 
 - [Instalacja](#instalacja)
 - [Integracja](#integracja)
 - [Formaty danych](#formaty-danych)
-- [Podziękowania](#podziekowania)
+- [Podziękowania](#podziękowania)
 
 ---
 
